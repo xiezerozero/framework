@@ -1,0 +1,3 @@
+mysql :
+    concat
+    group_concat

@@ -1,0 +1,8 @@
+    1. $t = 'ajksdhjksadhj';
+    $length = 6;
+    echo strlen($t) > $length;
+    echo isset($t{$length});    //faster
+
+    2.  isset & array_key_exists
+
+    3.  $result = json_decode(trim($contents,chr(239).chr(187).chr(191)),true);

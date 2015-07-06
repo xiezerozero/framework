@@ -1,0 +1,128 @@
+instanceof   实例是否是某个特定的类型,实例是否从某个特定的类型继承,实例或者它的任何祖先类是否实现了特定的接口
+
+
+static  self   parent
+
+
+singleton  单例模式
+    1.必须拥有一个构造函数,并且被标记为private
+    2.拥有一个保存类的实例的静态成员变量
+    3.拥有一个访问这个实例的公共静态方法
+    4.必须创建一个空的私有的__clone()方法,防止对象被复制或克隆
+    private static $_instance;
+    private function __construct(){}
+    public static function getInstance()
+    {
+        if (!(self::$_instance instanceof self)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+    private function __clone() {}   //私有__clone方法消除了PHP复制对象从而破坏单一职责的一个漏洞
+
+纯静态类(不需要实例化),内部方法都是static(特殊除外) ,将__construct设置为private,去掉getInstance方法和$_instance变量
+
+
+factory  工厂模式
+    1.一般具有一个被命名为factory的静态方法,这个方法可以接收任意数量的参数,必须返回一个对象
+    应用程序的其他部分完全不知道与何种类型的数据库打交道,只会基于IDbInterface接口定义的规则直接与工厂返回的实例打交道,不必在乎数据库查询具体是怎么实现的
+    如果需要添加db2的数据库实现,那么就重新添加一个DB2的类去实现IDbInterface,将工厂返回的实例调整为DB2类的实例即可
+    这样可以防止我们从mysql切换到oracle时,去修改所有获得mysql实例的代码,使用工厂模式,则只需要修改工厂模式返回的实例即可
+        interface IDbInterface
+        {
+            public function insert($table,$values,$fields = null, $dataTypes = null);
+
+            public function update($table,$fields,$values,$where = null,$dataTypes = null);
+
+            public function delete($table,$where = null,$placeHolders = null, $dataTypes = null);
+
+            public function fetchOne($sqlQuery, $fetchModel = null, $placeHolders = null);
+
+            public function fetchAll($sqlQuery, $fetchModel = null, $placeHolders = null);
+        }
+
+        class Mysql implements IDbInterface
+        {
+
+            public function insert($table, $values, $fields = null, $dataTypes = null)
+            {
+            }
+
+            public function update($table, $fields, $values, $where = null, $dataTypes = null)
+            {
+            }
+
+            public function delete($table, $where = null, $placeHolders = null, $dataTypes = null)
+            {
+            }
+
+            public function fetchOne($sqlQuery, $fetchModel = null, $placeHolders = null)
+            {
+            }
+
+            public function fetchAll($sqlQuery, $fetchModel = null, $placeHolders = null)
+            {
+            }
+        }
+
+        class Oracle implements IDbInterface
+        {
+
+            public function insert($table, $values, $fields = null, $dataTypes = null)
+            {
+            }
+
+            public function update($table, $fields, $values, $where = null, $dataTypes = null)
+            {
+            }
+
+            public function delete($table, $where = null, $placeHolders = null, $dataTypes = null)
+            {
+            }
+
+            public function fetchOne($sqlQuery, $fetchModel = null, $placeHolders = null)
+            {
+            }
+
+            public function fetchAll($sqlQuery, $fetchModel = null, $placeHolders = null)
+            {
+            }
+        }
+
+        class DatabaseFactory
+        {
+            public static function factory($type = 'mysql')
+            {
+                switch ($type) {
+                    case 'oracle':
+                        $db = new Oracle();
+                        break;
+                    case 'mysql':
+                    default:
+                        $db = new Mysql();
+                        break;
+                }
+                if ($db instanceof IDbInterface) {
+                    return $db;
+                } else {
+                    throw new \Exception('');
+                }
+            }
+        }
+
+
+
+exception   捕获异常,记录日志
+        通常对于一些未捕获到的异常,我们都应该将其记录日志,以便以后检查
+        1.set_exception_handle('custom_exception_handle');
+        function custom_exception_handle($exception)
+        {
+            file_put_contents('./exception.log',$exception->__toString() , FILE_APPEND);
+        }
+        2.在应用程序的最外层,捕获所有的Exception超类(最后一个catch语句块,这些exception都算是正常流程未捕获到的exception),将异常信息记录日志
+        不应该使用异常来控制一般的应用程序流,会降低应用程序的性能.(比如在数据库中搜索登录标识并且没找到时,返回null或者false比抛出异常更好,性能更高,这是从PHP函数返回混合结果的方法:有效时返回数据,false或者null代表发生了错误)
+        可以统一定义一个异常日志来管理异常code和异常message(eg:ApplicationException),应用程序中抛出异常就抛出指定的ApplicationException,
+        在ApplicationException中定义好所有异常的code和对应的message(重写__construct方法,message设置为optional参数,未传递则使用code对应的message)
+
+
+

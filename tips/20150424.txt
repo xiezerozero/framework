@@ -1,0 +1,51 @@
+1.  The Factory Pattern
+    问题:许多对象的创建都需要一系列的步骤：可能需要计算或取得对象的初始设置；可能必须选择实例化众多子类中的哪一个；或者，可能在创建需要的对象前还必须创建一批其它辅助对象。在这些情况下，new 更像一个“过程”而非一个操作 —— 就像大型机器的一个齿轮那样
+
+    解决:创建一个“工厂” -- 一个函数或者一个类方法 -- 来“加工”新对象。
+    eg：数据库连接
+    class Product
+    {
+        public function getList()
+        {
+            $db = new MysqlConnection(DB_USER, DB_PASSWORD);
+            //  do more
+        }
+
+        public function getName()
+        {
+            $db = new MysqlConnection(DB_USER, DB_PASSWORD);
+            //  do more
+        }
+    }
+    虽然很容易改变参数值，但如果要增加参数或改变参数的顺序，就必须更改(至少)两段代码。
+    很难实例化一个新类来使用别的数据库连接，比如说 PostgresqlConnection。
+    很难独立地测试和验证连接对象的行为。
+    使用Factory极大的改善
+    class Product
+    {
+        public function getList()
+        {
+            $db = DBConnection::getInstance();
+        }
+    }
+    class DBConnection
+    {
+        private static $_instance;
+        private function __construct(){}    //定义私有构造器,防止直接实例化
+
+        public static function getInstance()
+        {
+            if (self::$_instance === null) {
+                self::$_instance = new MysqlConnection(DB_USER, DB_PASSWORD);
+            }
+            return self::$_instance;
+        }
+        private function __clone(){}    //防止使用clone 关键字克隆对象
+    }
+
+
+2. The Singleton Pattern
+
+3.  The Registry Pattern
+    将所有需要用的对象/数据放入一个Registry类中,通过Registry获取所有需要访问的对象/数据,Registry实现单例模式,类似于DI(dependencyInjector)
+

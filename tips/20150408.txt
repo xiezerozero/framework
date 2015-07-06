@@ -1,0 +1,73 @@
+http://www.phpernote.com/php/
+http://www.imooc.com/view/69?from=phpernote
+http://www.phpernote.com/php-function/321.html
+
+
+1.  isset    strlen     isset比strlen更快
+    $str = "abcdefd";
+    echo isset($str{7});    {}的使用,把字符串当做数组处理
+    echo strlen($str);
+
+
+2.  str_shuffle  str_split  strstr(strchr)  strrchr  strpos  strtr  substr_compare  substr_count
+
+
+
+3.  只能输入汉字："^[\u4e00-\u9fa5]{0,}$
+    只能输入由数字、26个英文字母或者下划线组成的字符串："^\w+$"
+    只能输入非零的正整数："^\+?[1-9][0-9]*$"
+    只能输入非零的负整数："^\-[1-9][0-9]*$"
+
+
+4.  error_log($message . PHP_EOL, 3, $destination);
+
+
+5.  download file:
+    header("Content-type: application/octet-stream");
+    header("Accept-Ranges: bytes");
+    header("Accept-Length: 10000");
+    header("Content-Disposition: attachment; filename=test/test.php");
+
+    设置Content-Type:
+    header('Content-Type: text/html; charset=iso-8859-1');
+    header('Content-Type: text/html; charset=utf-8');
+    header('Content-Type: text/plain'); //纯文本格式
+    header('Content-Type: image/jpeg'); //JPG图片
+    header('Content-Type: application/zip'); // ZIP文件
+    header('Content-Type: application/pdf'); // PDF文件
+    header('Content-Type: audio/mpeg'); // 音频文件
+    header('Content-Type: application/x-shockwave-flash'); //Flash动画
+
+
+6.  + 和 array_merge的区别
+
+    （1）键名为数字（数值数组）时，array_merge()不会覆盖掉原来的值，但＋合并数组则会把最先出现的值作为最终结果返回，而把后面的数组拥有相同键名的那些值“抛弃”掉（不是覆盖）。
+
+    （2）键名为字符（关联数组）时，＋仍然把最先出现的值作为最终结果返回，把后面的数组拥有相同键名的那些值“抛弃”掉，但array_merge()此时会覆盖掉前面相同键名的值。
+
+
+
+7.  php -i -> info.txt
+    php -r print_r(get_loaded_extensions());
+    php -f $file
+    php -v
+    php -h
+    ......
+
+
+8.  ob_start();
+    ob_clean();
+    ob_flush();
+    ob_get_contents();
+    ob_end_clean();
+
+
+9.  $f = fopen($filePath, 'a+');
+    ob_start();
+    $file = ob_get_contents();
+    ob_end_clean();
+    fwrite($f, $file);
+    fclose($f);
+
+
+
