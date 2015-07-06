@@ -1,0 +1,15 @@
+1.
+    http://stackoverflow.com/questions/12077177/how-does-recursiveiteratoriterator-work-in-php/12236744#12236744
+    http://stackoverflow.com/questions/12774647/php-recursivedirectoryiterator
+
+     the RecursiveDirectoryIterator is only the container. You can iterate over it straight away (e.g. with foreach), but that linear order object iteration would not do the tree traversal.
+
+     So the RecursiveIteratorItertor is providing object traversal in linear order while performing a tree traversal over a concrete RecursiveIterator implementaion.
+
+     RecursiveIteratorIterator allows you to loop over a tree, IteratorIterator allows you to loop over a list.
+
+     RecursiveIteratorIterator is a concrete Iterator implementing tree traversal.(树的遍历)
+
+     IteratorIterator which is a concrete Iterator implementing object traversal in linear order (and by default accepting any kind of Traversable in its constructor)
+
+     To summarize: RecursiveIterator is a concrete type of iteration (looping over a tree) that works on its own iterators, namely RecursiveIterator. That is the same underlying principle as with IteratorIterator, but the type of iteration is different (linear order).

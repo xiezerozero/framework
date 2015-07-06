@@ -1,0 +1,5 @@
+interface Reflector {
+    abstract public static string function export();
+
+    abstract public static string function __toString();
+}

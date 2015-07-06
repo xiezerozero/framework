@@ -1,0 +1,46 @@
+SPL Iterator
+
+1. Traversable
+
+2. interface Iterator extends Traversable
+{
+    public function current();
+    public function key();
+    public function next();
+    public function rewind();
+    public function valid();
+}
+
+interface IteratorAggregate extends Traversable
+{
+    /** @return \Iterator */
+    public function getIterator();
+}
+
+
+/**
+ * OuterIterator的作用是遍历迭代器  比如AppendIterator
+ */
+interface OuterIterator extends Iterator, Traversable
+{
+    public function getInnerIterator();
+}
+
+
+interface RecursiveIterator extends Iterator, Traversable
+{
+    public function hasChildren();
+    public function getChildren();
+}
+
+
+
+
+
+SPL File and Directory
+    SplFileInfo
+    DirectoryIterator
+    RecursiveDirectoryIterator
+    RecursiveIteratorIterator
+
+

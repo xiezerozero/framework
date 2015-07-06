@@ -1,0 +1,5 @@
+
+    1. ctype_alpha
+       ctype_alnum  ....
+
+    2.file_get_contents('php://input') 请求头信息Content-Type:application/json时,$_POST获取不到数据

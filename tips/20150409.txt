@@ -1,0 +1,140 @@
+www.onlamp.com
+www.php.net/sites.php
+http://www.devzone.zend.com/
+http://www.sitepoint.com/
+
+1.  php.ini中,跟错误相关的选项:error_reporting, display_errors,log_errors,error_log
+    error_reporting = E_ALL
+    display_errors = On
+    log_errors = On     打开记录错误日志
+    error_log = "D:/mine/wamp/logs/php_error.log"   日志目录
+
+
+2.  trigger_error, set_error_handler, set_exception_handler
+    trigger_error : E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE
+
+    set_error_handler :
+        $errorHandler = set_error_handler('custom_error_handler');
+        /**
+         * 自定义错误处理
+         *
+         * @param $errorNo
+         * @param $errorStr
+         * @param $errorFile
+         * @param $errorLine
+         *
+         * @return bool
+         */
+        function custom_error_handler($errorNo, $errorStr, $errorFile, $errorLine)
+        {
+            $logFile = "PHP_log_%s_" . date('Ynd') . '.log';
+            $now = date('Y-m-d H:i:s');
+            $templateStr = "[$now] %s on line $errorLine in file $errorFile : $errorStr" . PHP_EOL;
+            $logStr = '';
+            switch ($errorNo) {
+                case E_USER_ERROR:
+                    $logFile = sprintf($logFile, 'ERROR');
+                    $logStr = sprintf($templateStr, 'Fatal error');
+                    break;
+                case E_USER_WARNING:
+                    $logFile = sprintf($logFile, 'WARNING');
+                    $logStr = sprintf($templateStr, 'WARNING');
+                    break;
+                case E_USER_NOTICE:
+                    $logFile = sprintf($logFile, 'NOTICE');
+                    $logStr = sprintf($templateStr, 'NOTICE');
+                    break;
+            }
+            if ($logStr != '') {
+                error_log($logStr, 3, $logFile);
+            }
+            return true;
+        }
+
+    set_exception_handler:
+        function custom_exception_handler($exception)
+        {
+            echo "uncaught exception " . $exception->getMessage();
+        }
+
+
+3.  here document    (STRING后面一定要有一行)
+    $url = "http://www.baidu.com";
+
+    echo <<<STRING
+        this is the $url
+    STRING;
+
+
+4.  strpos($haystack, $needle, $offset)
+    substr($str, $start, $length)
+    substr_replace($stringOrArray, $replacement, $start, $length);
+    strrev($string)   :   array_reverse($array);
+    str_replace($stringOrArray, $replacement, $haystack, $count);
+    ucfirst();
+    ucwords();
+    strtolower()
+    strtoupper()
+
+
+5.  fputcsv(resource $handle, array $fields);
+    fgetcsv(resource $handle);
+
+    eg:         // $list  = array (
+                //     array( 'aaa' ,  'bbb' ,  'ccc' ,  'dddd' ),
+                //     array( '123' ,  '456' ,  '789' ),
+                //     array( '"aaa"' ,  '"bbb"' )
+                // );
+                //  $fp  =  fopen ( 'file.csv' ,  'w+' );
+                // foreach ( $list  as  $fields ) {
+                //      fputcsv ( $fp ,  $fields );
+                // }
+                //  fclose ( $fp );
+
+
+                //  $f = fopen('file.csv', 'r');
+                // while (($csv_line = fgetcsv($f, 1000, ',')) !== false) {
+                //          $c = count($csv_line);
+                //          for ($i = 0; $i < $c; $i ++) {
+                //                 print_r($csv_line[$i]);
+                //          }
+                // }
+                // 	fclose($f);
+
+
+6.  split($pattern, $string)
+    preg_split($pattern, $string)
+    explode($delimiter, $string)
+    wordwrap($string)
+
+
+
+7.  round
+    floor
+    ceil
+    range
+    abs
+    is_numeric,is_float,is_int.....
+    mt_rand
+    log
+    log10
+    exp($arg)    计算$arg的e次幂
+    pow($base, $exp)    计算$base的$exp次幂
+    number_format($number,$decimals = 0,$dec_point = '.', $thousands_sep = ',')
+    money_format
+
+
+8.  sin
+    cos
+    tan
+    asin
+    acos
+    atan
+    deg2rad 角度转弧度
+    rad2deg 弧度转角度
+
+
+9.  BCMath  GMP函数库
+
+
+
