@@ -26,4 +26,9 @@ class PostController extends Controller
 		exit;
     }
 
+	public function devAction()
+	{
+		echo 'devAction';
+	}
+
 } 
