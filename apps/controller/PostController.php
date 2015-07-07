@@ -22,6 +22,7 @@ class PostController extends Controller
     public function addAction()
     {
         echo "PostController::addAction()";
+		echo 'this is the dev branch';
 		exit;
     }
 
