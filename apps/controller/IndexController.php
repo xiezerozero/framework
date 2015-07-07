@@ -38,7 +38,7 @@ class IndexController extends Controller
 
     public function testAction()
     {
-        echo 'test';
+        echo 'test haha';
     }
 
 } 
