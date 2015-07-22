@@ -29,6 +29,7 @@ class PostController extends Controller
 	public function devAction()
 	{
 		echo 'devAction';
+        echo 'test push';
 	}
 
 } 
