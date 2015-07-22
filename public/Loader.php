@@ -18,13 +18,13 @@ namespace Library;
 class Loader
 {
     /** @var array 带有命名空间的目录  ['namespace' => $directory] */
-    private static $_namespaceClasses;
+    private static $_namespaceClasses = [];
 
     /** @var array 不带有命名空间的目录 [$directory1, $directory2] */
-    private static $_classes;
+    private static $_classes = [];
 
     /** @var  array 引入第三方类文件  todo */
-    private static $_autoloadClasses;
+    private static $_autoloadClasses = [];
 
     /**
      * 加入默认的命名空间对应的目录,用于自动加载文件

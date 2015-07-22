@@ -14,3 +14,8 @@
 
 5. $this->setExpectedException($exceptionName, $exceptionMessage, $exceptionCode);
    $this->setExpectedExceptionRegExp($exceptionName, $exceptionMessage, $exceptionCode);
+
+6. @expectedException \PHPUnit_Framework_Error
+   @expectedException \PHPUnit_Framework_Error_Notice
+   @expectedException \PHPUnit_Framework_Error_Warning
+
